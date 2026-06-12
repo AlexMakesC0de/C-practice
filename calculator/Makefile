@@ -1,12 +1,13 @@
 CC = cc
 CFLAGS = -Wall -Wextra -std=c11
+LDLIBS = -lm
 TARGET = calc
 OBJS = main.o calc.o
 
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) $(LDLIBS)
 
 main.o: main.c calc.h
 	$(CC) $(CFLAGS) -c main.c

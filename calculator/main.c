@@ -1,11 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "calc.h"
 
 int main(int argc, char *argv[])
 {
+    if (argc == 3 && strcmp(argv[1], "sqrt") == 0) {
+        int err = 0;
+        double result = square_root(atof(argv[2]), &err);
+        if (err) {
+            printf("error: cannot take square root of a negative number\n");
+            return 1;
+        }
+        printf("%g\n", result);
+        return 0;
+    }
+
     if (argc != 4) {
-        printf("usage: %s NUM OP NUM\n", argv[0]);
+        printf("usage: %s NUM OP NUM  (or: %s sqrt NUM)\n", argv[0], argv[0]);
         return 1;
     }
 
@@ -25,6 +37,16 @@ int main(int argc, char *argv[])
                 printf("error: cannot divide by zero\n");
                 return 1;
             }
+            break;
+        case '%':
+            result = modulo(a, b, &err);
+            if (err) {
+                printf("error: cannot modulo by zero\n");
+                return 1;
+            }
+            break;
+        case '^':
+            result = power(a, b);
             break;
         default:
             printf("error: unknown operator '%c'\n", op);
